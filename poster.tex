@@ -93,8 +93,8 @@
 	headerFontColor=black,
 	}%
 	{\includegraphics[height=7em]{logos/mff-black.pdf}}
-	{Thesis name goes here}
-	{\vspace{1ex} Yourname Goeshere}
+	{Umělá inteligence pro strategické hry s~neúplnou informací}
+	{\vspace{1ex} Lukáš Eigler}
 	{\includegraphics[height=7em]{logos/uk-red.pdf}}
 
 
@@ -102,41 +102,39 @@
 % LEFT COLUMN
 %
 
-\begin{posterbox}[column=0,name=background]{Background}
-Describe what is the problem that your thesis addresses.
+\begin{posterbox}[column=0,name=background]{Úvod}
+Umělá inteligence je velmi aktuální téma. Různé hry se značnou dobu využívají jako benchmark pro sledování pokroku vývoje. Od roku 1997, kdy DeepBlue II poprvé porazila velmistra a světového šampiona v šachách, se vývoj nezastavil. 
 
-Include a picture of the problem. Name the problem.
-
-\begin{center}\begin{tikzpicture}[ultra thick, inner sep=1ex]
-\node[rectangle, rounded corners=1ex, draw=red!80!black, color=red!80!black, font=\huge\bfseries, rotate=21] {Problem!};
-\end{tikzpicture}\end{center}
+%\begin{center}\begin{tikzpicture}[ultra thick, inner sep=1ex]
+%\node[rectangle, rounded corners=1ex, draw=red!80!black, color=red!80!black, font=\huge\bfseries, rotate=21] {Problem!};
+%\end{tikzpicture}\end{center}
 \end{posterbox}
 
-\begin{posterbox}[column=0, name=goals, below=background, headerColorOne=cyan!60, boxColorOne=cyan!20]{Thesis goals}
-\begin{itemize}
-\item How do you approach and address the problem?
-\item What tools do you use to address it?
-\item \dots
-\end{itemize}
+%\begin{posterbox}[column=0, name=goals, below=background, headerColorOne=cyan!60, boxColorOne=cyan!20]{Cíl práce}
+\begin{posterbox}[column=0, name=goals, below=background]{Cíl práce}
+Mezi cíle této práce patří naprogramovat a připravit hratelnou implementaci deskové hry "Fantom staré Prahy" pomocí herního engine Unity. Hra poskytuje možnost doplnění o vlastní implementaci umělého agenta, jak za Fantoma či detektivy. Hlavním cílem práce bylo připravit agenty s různou úrovní obtížnosti pro případné hraní. 
 
-Highlighting important boxes helps a lot, but do not overdo the highlighting --- if all boxes are highlighted, not a single one will actually stand out.
 \end{posterbox}
 
-\begin{posterbox}[column=0, name=something1, below=goals]{Some extra boxes}
-This box may contain an overview of the used methods, mathematics, program structure, etc.
+\begin{posterbox}[column=0, name=something1, below=goals]{Řešení}
+Díky vlastnostem hry se jedná o hru s neúplnou informací - detektivové většinu kol neznají přímou polohu Fantoma. Pro vymyšlení umělého hráče proto využíváme některé teoretické poznatky z teorie her, což je obor matematiky/ekonomie. 
+Připravili jsme dva druhy agentů. První využívá heuristiky pro rozhodování a druhý Monte Carlo metody. Zvolené heuristiky pro každý tah ohodnotí možné pohyby dle vzdálenosti od detektivů, respektive od Fantoma, a zvolí ten nejvzdálenější pro Fantoma, respektive nejbližší pro detektivy. Oproti tomu agent využívající Monte Carlo metody má obecný Information Set Monte Carlo Tree Search (ISMCTS) algoritmus pro prohledávání prostoru. Samostatný Monte Carlo Tree Search (MCTS) není dostačující kvůli neúplné informaci, ISMCTS problém řeší pomocí tzv. determinizace - náhodné zvolení možného stavu a následné průměrování přes všechny stavy. Přestože má determinizace teoretické nedostatky, na některé problémy se dá využít. Hráč s ISMCT kromě popisu hry nevyužívá žádné znalosti domény.
 
-Include a picture, because pictures are better. Thesis defense takes less than 10 minutes, no one can read a wall of text in that short time. (For comparison, the usual realistic poster visit on a conference takes 15 seconds, unless the poster manages to catch the attention in that short time.)
 
-\tikzstyle{rec}=[rectangle, draw, rounded corners=1ex, font=\huge\bfseries]
-\begin{center}\begin{tikzpicture}[ultra thick, inner sep=1ex]
-\node[rec] (a) {Keep};
-\node[rec, circle, right=of a] (b) {it};
-\node[rec, right=of b] (c) {simple};
-\node[rec, densely dotted, below=6cm of c, font=\small] (notice) {\dots{}but precise!};
-\draw[->] (a) to (b);
-\draw[->] (b) to (c);
-\draw[dotted] (notice) to (c);
-\end{tikzpicture}\end{center}
+%This box may contain an overview of the used methods, mathematics, program structure, etc.
+
+%Include a picture, because pictures are better. Thesis defense takes less than 10 minutes, no one can read a wall of text in that short time. (For comparison, the usual realistic poster visit on a conference takes 15 seconds, unless the poster manages to catch the attention in that short time.)
+
+%\tikzstyle{rec}=[rectangle, draw, rounded corners=1ex, font=\huge\bfseries]
+%\begin{center}\begin{tikzpicture}[ultra thick, inner sep=1ex]
+%\node[rec] (a) {Keep};
+%\node[rec, circle, right=of a] (b) {it};
+%\node[rec, right=of b] (c) {simple};
+%\node[rec, densely dotted, below=6cm of c, font=\small] (notice) {\dots{}but precise!};
+%\draw[->] (a) to (b);
+%\draw[->] (b) to (c);
+%\draw[dotted] (notice) to (c);
+%\end{tikzpicture}\end{center}
 
 \end{posterbox}
 
@@ -149,11 +147,11 @@ $$ \textsc{Success}(p) = \frac{\textsc{Clarity}(p)}{\textsc{TimeToViewerAttentio
 % FOOTER
 %
 
-\begin{posterbox}[column=0, span=2, name=footer, below=something2,
-	textborder=none, headerborder=none, boxheaderheight=0pt,
-	boxColorOne=black!3]{}
-If some institute/grant/department sponsored the work, put an acknowledgement here.
-\end{posterbox}
+%\begin{posterbox}[column=0, span=2, name=footer, below=something2,
+%	textborder=none, headerborder=none, boxheaderheight=0pt,
+%	boxColorOne=black!3]{}
+%If some institute/grant/department sponsored the work, put an acknowledgement here.
+%\end{posterbox}
 
 %
 % RIGHT COLUMN
