@@ -124,6 +124,10 @@ Mezi cíle této práce patří naprogramovat a připravit hratelnou implementac
 Díky vlastnostem hry se jedná o hru s neúplnou informací - detektivové většinu kol neznají přímou polohu Fantoma. Pro vymyšlení umělého hráče proto využíváme některé teoretické poznatky z teorie her, což je obor matematiky/ekonomie. 
 Připravili jsme dva druhy agentů. První využívá heuristiky pro rozhodování a druhý Monte Carlo metody. Zvolené heuristiky pro každý tah ohodnotí možné pohyby dle vzdálenosti od detektivů, respektive od Fantoma, a zvolí ten nejvzdálenější pro Fantoma, respektive nejbližší pro detektivy. Oproti tomu agent využívající Monte Carlo metody má obecný Information Set Monte Carlo Tree Search (ISMCTS) algoritmus pro prohledávání prostoru. Samostatný Monte Carlo Tree Search (MCTS) není dostačující kvůli neúplné informaci, ISMCTS problém řeší pomocí tzv. determinizace - náhodné zvolení možného stavu a následné průměrování přes všechny stavy. Přestože má determinizace teoretické nedostatky, na některé problémy se dá využít. Hráč s ISMCT kromě popisu hry nevyužívá žádné znalosti domény.
 
+\begin{center}
+\includegraphics[width=1\linewidth]{img/mcts-alg.png}
+\end{center}
+
 
 %This box may contain an overview of the used methods, mathematics, program structure, etc.
 
@@ -142,10 +146,10 @@ Připravili jsme dva druhy agentů. První využívá heuristiky pro rozhodován
 
 \end{posterbox}
 
-\begin{posterbox}[column=0, name=something2, below=something1, headerColorOne=yellow!80!orange!95!black, boxColorOne=yellow!33]{Golden rule of posters}
-For each $p \in P$ where $P$ is a set of posters:
-$$ \textsc{Success}(p) = \frac{\textsc{Clarity}(p)}{\textsc{TimeToViewerAttention}(p)} $$
-\end{posterbox}
+%\begin{posterbox}[column=0, name=something2, below=something1, headerColorOne=yellow!80!orange!95!black, boxColorOne=yellow!33]{Golden rule of posters}
+%For each $p \in P$ where $P$ is a set of posters:
+%$$ \textsc{Success}(p) = \frac{\textsc{Clarity}(p)}{\textsc{TimeToViewerAttention}(p)} $$
+%\end{posterbox}
 
 %
 % FOOTER
@@ -165,50 +169,39 @@ $$ \textsc{Success}(p) = \frac{\textsc{Clarity}(p)}{\textsc{TimeToViewerAttentio
 % with measurements are perfect, tables are also good.
 %
 
-\begin{posterbox}[column=1, name=result1]{Result: SomePlots are Good}
+\begin{posterbox}[column=1, name=result1]{Výsledky}
+Porovnání kvality umělých agentů probíhalo jako menší turnaj na 3 různých náhodně vygenerovaných mapách. Na každé mapě se zápas opakoval 50krát. Nejdříve se hráč využívající heuristiku utkal proti náhodnému hráči. Vítěz, v obou případech hráč s heuristikou, se utkal s proti agentovi s ISMCTS. Tabulky níže popisují výhernost hráče využívající heuristiku proti hráči využívající ISMCTS.  
+V první tabulce využívá Fantom ISMCTS a detektivové heuristiku.
 \begin{center}
-\includegraphics[width=0.7\linewidth]{img/ukazka-obr02.pdf}
+\includegraphics[width=0.7\linewidth]{img/fantom-mcts.png}
 \end{center}
 
-You may want to choose a single picture and make it stand out of the poster, so that it communicates the main result of your thesis as clearly as possible.
-\end{posterbox}
-
-\begin{posterbox}[column=1, name=result2, below=result1]{Result: TableData are OK too}
+Ve druhé tabulce naopak Fantom využívá heuristiku a detektivové ISMCTS.
 \begin{center}
-\begin{tabular}{lrr}
- & \textbf{SomeProgram} & \textbf{ThisThesis} \\
-\hline
-Process A & 50\% & 58\% \\
-Time for A & 35 days & \textcolor{green!80!black}{35 seconds} \\
-Process B & \textcolor{red}{15\%} & 55\% \\
-Time for B & 1 day & 8 hours \\
-Price & 66.6 EUR & free
-\end{tabular}
+\includegraphics[width=0.7\linewidth]{img/fantom-mcts.png}
 \end{center}
-\end{posterbox}
 
-\begin{posterbox}[column=1, name=result3, below=result2, headerColorOne=green!50!yellow, boxColorOne=green!10]{Main result}
-\large\bfseries
-\vspace{1ex}
+Histogram délek her, kdy vyhráli detektivové v zápasech, kdy Fantom využíval ISMCTS a detektivové heuristiku.
 \begin{center}
-Program ThesisProgram solves the problem better than OtherProgram if X, and faster if Y.
+\includegraphics[width=0.7\linewidth]{img/fantom-mcts.png}
 \end{center}
-\vspace{.5ex}
+
+
+
+
 \end{posterbox}
 
-\begin{posterbox}[column=1, name=conclusion, below=result3, bottomaligned=something2]{Conclusions}
-\begin{itemize}
-\item explain the value of your result to others
-\item point out any applications
-\item if the program is online/opensource/on github, you may highlight it here
-\end{itemize}
-Possible future work:
-\begin{itemize}
-\item say what could be improved
-\item point out any interesting new opened problems that would be worth investigating
-\item include long-term goals
-\end{itemize}
+\begin{posterbox}[column=1, name=result2, below=result1]{Závěr}
+Práce splnila předem dané cíle. Implementace hry nabízí možnost za Fantoma i detektivy zvolit reálného i umělého hráče, umožňuje tedy hrát lidským hráčům proti sobě, ale i proti různě silným soupeřům umělé inteligence.
 \end{posterbox}
+
+\begin{posterbox}[column=1, name=result3, below=result2]{Možná vylepšení}
+Implementace algoritmu ISMCTS nabízí několik možností vylepšení. Pro kvalitnější strategie je možné zabudovat do algoritmu, například zvolením chytřejší rollout strategie místo uniformní, která lépe reprezentuje chování racionálního hráče. Jiným možným vylepšením je vyřešit problém neúplné informace lepším způsobem, například nevybírat stav uniformě, ale dle pravděpodobnostní distribuce aktuální přes možné pozice Fantoma.  
+  
+Chytřejší agent se dá získat i pomocí konceptu regret z teorie her. Tohoto konceptu využívá algoritmus Student of Games, který je schopnýn hrát obecnou hru s neúplnou informací na rozumné úrovni, popsaný v práci.
+\end{posterbox}
+
+
 
 \end{poster}
 \end{document}
