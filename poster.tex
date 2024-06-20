@@ -39,6 +39,7 @@
 \usepackage{graphicx}
 \usepackage{amssymb,amsmath}
 \usepackage[export]{adjustbox} %allows using valign with \includegraphics
+\usepackage{booktabs}
 
 \renewcommand{\arraystretch}{1.5}
 
@@ -103,10 +104,10 @@
 %
 
 \begin{posterbox}[column=0,name=background]{Úvod}
-Tato práce řeší hru Fantom staré Prahy. Hrají proti sobě dva týmy, Fantom (jeden hráč) a detektivové (pět hráčů). Cíl Fantoma je nebýt dopaden po dobu hry - 24 kol, naopak detektivové mají za úkol Fantoma dopadnout. Hráči se pohybují po mapě zastávek spojených cestami dopravních prostředků. Pro přesun pomocí dopravního prostředku je nutné mít správný žeton. Háček je, že se Fantom pohybuje neviditelný a ukáže se pouze v pár předem určených kolech. Poskytuje pouze informaci o použitém dopravním prostředku.
+Tato práce se zabývá hrou Fantom staré Prahy. Hrají proti sobě dva týmy: Fantom (jeden hráč) a detektivové (pět hráčů). Cílem Fantoma je nebýt dopaden po 24 kol, zatímco detektivové se ho snaží dopadnout. Hráči se pohybují po mapě zastávek spojených cestami dopravních prostředků, pro jejichž použití je třeba mít správný žeton. Fantom se pohybuje neviditelně a ukáže se jen v několika předem určených kolech, přičemž poskytuje pouze informaci o použitém dopravním prostředku.
 
 \begin{center}
-\includegraphics[width=0.7\linewidth]{img/ingame_view.png}
+\includegraphics[width=0.8\linewidth]{img/ingame_view.png}
 \end{center}
 
 %\begin{center}\begin{tikzpicture}[ultra thick, inner sep=1ex]
@@ -116,13 +117,14 @@ Tato práce řeší hru Fantom staré Prahy. Hrají proti sobě dva týmy, Fanto
 
 %\begin{posterbox}[column=0, name=goals, below=background, headerColorOne=cyan!60, boxColorOne=cyan!20]{Cíl práce}
 \begin{posterbox}[column=0, name=goals, below=background]{Cíl práce}
-Mezi cíle této práce patří naprogramovat a připravit hratelnou implementaci deskové hry "Fantom staré Prahy" pomocí herního engine Unity. Hra poskytuje možnost doplnění o vlastní implementaci umělého agenta, jak za Fantoma či detektivy. Hlavním cílem práce bylo připravit agenty s různou úrovní obtížnosti pro případné hraní. 
+Mezi cíle této práce patří naprogramovat a připravit hratelnou implementaci deskové hry "Fantom staré Prahy" pomocí herního engine Unity. Hra poskytuje možnost doplnění o vlastní implementaci umělého agenta, jak za Fantoma, tak za detektivy. Hlavním cílem práce bylo připravit agenty s různou úrovní obtížnosti pro případné hraní.
 
 \end{posterbox}
 
 \begin{posterbox}[column=0, name=something1, below=goals]{Řešení}
-Díky vlastnostem hry se jedná o hru s neúplnou informací - detektivové většinu kol neznají přímou polohu Fantoma. Pro vymyšlení umělého hráče proto využíváme některé teoretické poznatky z teorie her, což je obor matematiky/ekonomie. 
-Připravili jsme dva druhy agentů. První využívá heuristiky pro rozhodování a druhý Monte Carlo metody. Zvolené heuristiky pro každý tah ohodnotí možné pohyby dle vzdálenosti od detektivů, respektive od Fantoma, a zvolí ten nejvzdálenější pro Fantoma, respektive nejbližší pro detektivy. Oproti tomu agent využívající Monte Carlo metody má obecný Information Set Monte Carlo Tree Search (ISMCTS) algoritmus pro prohledávání prostoru. Samostatný Monte Carlo Tree Search (MCTS) není dostačující kvůli neúplné informaci, ISMCTS problém řeší pomocí tzv. determinizace - náhodné zvolení možného stavu a následné průměrování přes všechny stavy. Přestože má determinizace teoretické nedostatky, na některé problémy se dá využít. Hráč s ISMCT kromě popisu hry nevyužívá žádné znalosti domény.
+Díky vlastnostem hry se jedná o hru s neúplnou informací - detektivové většinu kol neznají přesnou polohu Fantoma.
+
+Připravili jsme dva druhy agentů. První využívá přímočaré heuristiky, které hodnotí možné tahy podle vzdálenosti od detektivů nebo Fantoma a vybírá ten nejvzdálenější pro Fantoma a nejbližší pro detektivy. Druhý agent využívá metody Monte Carlo s algoritmem Information Set Monte Carlo Tree Search (ISMCTS) pro prohledávání prostoru. ISMCTS řeší problém neúplné informace pomocí determinizace - náhodného výběru možného stavu a průměrování přes všechny stavy. Determinizace má teoretické nedostatky. Hráč s ISMCTS kromě popisu hry nevyužívá žádné znalosti domény.
 
 \begin{center}
 \includegraphics[width=1\linewidth]{img/mcts-alg.png}
@@ -170,21 +172,60 @@ Připravili jsme dva druhy agentů. První využívá heuristiky pro rozhodován
 %
 
 \begin{posterbox}[column=1, name=result1]{Výsledky}
-Porovnání kvality umělých agentů probíhalo jako menší turnaj na 3 různých náhodně vygenerovaných mapách. Na každé mapě se zápas opakoval 50krát. Nejdříve se hráč využívající heuristiku utkal proti náhodnému hráči. Vítěz, v obou případech hráč s heuristikou, se utkal s proti agentovi s ISMCTS. Tabulky níže popisují výhernost hráče využívající heuristiku proti hráči využívající ISMCTS.  
+Porovnání kvality umělých agentů probíhalo formou menšího turnaje na třech různých náhodně vygenerovaných mapách. Na každé mapě se zápas opakoval 50krát. Nejdříve se hráč využívající heuristiku utkal proti náhodnému hráči. Vítěz, v obou případech hráč s heuristikou, se utkal proti agentovi s ISMCTS. Tabulky níže popisují výhernost hráče využívajícího heuristiku proti hráči využívajícímu ISMCTS.  
+
+\vspace{0.5cm}
+
 V první tabulce využívá Fantom ISMCTS a detektivové heuristiku.
+
+\vspace{0.3cm}
+
 \begin{center}
-\includegraphics[width=0.7\linewidth]{img/fantom-mcts.png}
+%\caption{Počet výher detektivů (heuristika) a Fantoma (ISMCTS)}
+\label{tab:mcts-heur}
+\begin{tabular}{@{}lcc@{}}
+    \toprule
+    \textbf{Mapa} & \textbf{Detektivové} & \textbf{Fantom} \\
+    \midrule
+    Mapa 1 & 17 & 33 \\
+    Mapa 2 & 20 & 30 \\
+    Mapa 3 & 19 & 31 \\
+    \bottomrule
+\end{tabular}
 \end{center}
+
+\vspace{0.5cm}
+
+%\begin{center}
+%\includegraphics[width=0.7\linewidth]{img/fantom-mcts.png}
+%\end{center}
 
 Ve druhé tabulce naopak Fantom využívá heuristiku a detektivové ISMCTS.
+
+\vspace{0.3cm}
+
+
 \begin{center}
-\includegraphics[width=0.7\linewidth]{img/fantom-mcts.png}
+\label{tab:mcts-heur}
+\begin{tabular}{@{}lcc@{}}
+    \toprule
+    \textbf{Mapa} & \textbf{Detektivové} & \textbf{Fantom} \\
+    \midrule
+    Mapa 1 & 17 & 33 \\
+    Mapa 2 & 20 & 30 \\
+    Mapa 3 & 19 & 31 \\
+    \bottomrule
+\end{tabular}
 \end{center}
 
-Histogram délek her, kdy vyhráli detektivové v zápasech, kdy Fantom využíval ISMCTS a detektivové heuristiku.
-\begin{center}
-\includegraphics[width=0.7\linewidth]{img/fantom-mcts.png}
-\end{center}
+%\begin{center}
+%\includegraphics[width=0.7\linewidth]{img/fantom-mcts.png}
+%\end{center}
+
+%Histogram délek her, kdy vyhráli detektivové v zápasech, kdy Fantom využíval ISMCTS a detektivové heuristiku.
+%\begin{center}
+%\includegraphics[width=0.7\linewidth]{img/fantom-mcts-histogram.png}
+%\end{center}
 
 
 
@@ -192,13 +233,13 @@ Histogram délek her, kdy vyhráli detektivové v zápasech, kdy Fantom využív
 \end{posterbox}
 
 \begin{posterbox}[column=1, name=result2, below=result1]{Závěr}
-Práce splnila předem dané cíle. Implementace hry nabízí možnost za Fantoma i detektivy zvolit reálného i umělého hráče, umožňuje tedy hrát lidským hráčům proti sobě, ale i proti různě silným soupeřům umělé inteligence.
+Práce splnila předem stanovené cíle. Implementace hry nabízí možnost volby reálného i umělého hráče jak za Fantoma, tak za detektivy, což umožňuje hrát lidským hráčům proti sobě i proti různě silným soupeřům umělé inteligence.
 \end{posterbox}
 
 \begin{posterbox}[column=1, name=result3, below=result2]{Možná vylepšení}
-Implementace algoritmu ISMCTS nabízí několik možností vylepšení. Pro kvalitnější strategie je možné zabudovat do algoritmu, například zvolením chytřejší rollout strategie místo uniformní, která lépe reprezentuje chování racionálního hráče. Jiným možným vylepšením je vyřešit problém neúplné informace lepším způsobem, například nevybírat stav uniformě, ale dle pravděpodobnostní distribuce aktuální přes možné pozice Fantoma.  
-  
-Chytřejší agent se dá získat i pomocí konceptu regret z teorie her. Tohoto konceptu využívá algoritmus Student of Games, který je schopnýn hrát obecnou hru s neúplnou informací na rozumné úrovni, popsaný v práci.
+Implementace algoritmu ISMCTS nabízí několik možností vylepšení. Pro kvalitnější strategie je možné zabudovat do algoritmu chytřejší rollout strategii místo uniformní, která lépe reprezentuje chování racionálního hráče. Jiným možným vylepšením je vyřešit problém neúplné informace lepším způsobem, například nevybírat stav uniformně, ale podle pravděpodobnostní distribuce aktuálních možných pozic Fantoma.
+
+Chytřejšího agenta lze získat i pomocí konceptu regret z teorie her. Tento koncept využívá algoritmus Student of Games, který je schopný hrát obecnou hru s neúplnou informací na velmi dobré úrovni, jak je popsáno v práci.
 \end{posterbox}
 
 
